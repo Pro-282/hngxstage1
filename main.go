@@ -62,5 +62,6 @@ func handleRequest() {
 }
 
 func main() {
+	fmt.Println("starting server")
 	handleRequest()
 }

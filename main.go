@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 func api(w http.ResponseWriter, r *http.Request) {
@@ -41,12 +44,21 @@ func api(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	fmt.Println("Endpoint Hit: api")
+}
+
+func homePage(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Welcome to the HomePage!")
+	fmt.Println("Endpoint Hit: homePage")
 }
 
 func handleRequest() {
-	http.HandleFunc("/api", api)
+	myRouter := mux.NewRouter().StrictSlash(true)
+	myRouter.HandleFunc("/api", api)
+	myRouter.HandleFunc("/", homePage)
+
 	address := "0.0.0.0:3000"
-	log.Fatal(http.ListenAndServe(address, nil))
+	log.Fatal(http.ListenAndServe(address, myRouter))
 }
 
 func main() {

@@ -45,7 +45,7 @@ func api(w http.ResponseWriter, r *http.Request) {
 
 func handleRequest() {
 	http.HandleFunc("/api", api)
-	address := "0.0.0.0:8080"
+	address := "0.0.0.0:3000"
 	log.Fatal(http.ListenAndServe(address, nil))
 }
 
